@@ -1,0 +1,54 @@
+<html>
+<head>
+<style>
+img 
+{
+	cursor: pointer;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -120px; /* Half the height */
+    margin-left: -89px; /* Half the width */
+}
+body
+{
+	transition: background-color 1s;
+}
+img
+{
+	transition: transform 2s;
+}
+</style>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+	function changeColor() 
+	{
+	  var letters = '0123456789ABCDEF';
+	  var color = '#';
+	  for (var i = 0; i < 6; i++) {
+	    color += letters[Math.floor(Math.random() * 16)];
+	  }
+	  $("body").css("background-color",color);
+	}
+	function rotateJess()
+	{
+		$("img").css("transform","rotateY(360deg)");
+	}
+	$(document).ready(function(){
+		changeColor();
+		rotateJess();
+		var t = setInterval(changeColor, 1000);
+		var t2 = setInterval(rotateJess, 2000);
+		$("img").click(function(){
+			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
+			$("h1").text("Score: " + (s+1));
+		});
+	});
+</script>
+<title>Jess Clicker</title>
+</head>
+<body>
+<img src="jess.jpg"/>
+<h1 style="text-align: center;">Score: 0</h1>
+</body>
+</html>
