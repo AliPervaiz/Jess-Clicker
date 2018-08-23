@@ -1,22 +1,29 @@
 <html>
 <head>
 <style>
-img 
+#jesse 
 {
 	cursor: pointer;
 	position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
     margin-top: -120px; /* Half the height */
     margin-left: -89px; /* Half the width */
+    transition: transform 2s;
 }
 body
 {
 	transition: background-color 1s;
 }
-img
+#skeleton
 {
-	transition: transform 2s;
+	cursor: pointer;
+	position: absolute;
+    top: 75%;
+    left: 50%;
+    margin-top: -262px; /* Half the height */
+    margin-left: -287.5px; /* Half the width */
+    transition: transform 2s;
 }
 </style>
 <script src="jquery-3.3.1.min.js"></script>
@@ -32,13 +39,19 @@ img
 	}
 	function rotateJess()
 	{
-		$("img").css("transform","rotateY(360deg)");
+		$("#jesse").css("transform","rotateY(360deg)");
+		setTimeout(
+		  function() 
+		  {
+		    $("#jesse").css("transform","rotateY(0deg)");
+		  }, 1500);
+
 	}
 	$(document).ready(function(){
 		changeColor();
 		rotateJess();
 		var t = setInterval(changeColor, 1000);
-		var t2 = setInterval(rotateJess, 2000);
+		var t2 = setInterval(rotateJess, 3000);
 		$("img").click(function(){
 			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
 			$("h1").text("Score: " + (s+1));
@@ -48,7 +61,8 @@ img
 <title>Jess Clicker</title>
 </head>
 <body>
-<img src="jess.jpg"/>
+<img id="jesse" src="jess.jpg"/>
+<img id="skeleton" src="uh3.png"/>
 <h1 style="text-align: center;">Score: 0</h1>
 </body>
 </html>
