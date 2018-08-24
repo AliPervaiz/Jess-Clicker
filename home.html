@@ -47,14 +47,31 @@ body
 		  }, 1500);
 
 	}
+	function autoClick()
+	{
+		var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
+		$("h1").text("Score: " + (s+auto));
+	}
+	var auto = 0;
 	$(document).ready(function(){
 		changeColor();
 		rotateJess();
 		var t = setInterval(changeColor, 1000);
 		var t2 = setInterval(rotateJess, 3000);
+		var t3 = setInterval(autoClick, 1000);
 		$("img").click(function(){
 			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
 			$("h1").text("Score: " + (s+1));
+		});
+		$("button").click(function(){
+			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
+			var c = parseInt($("button").text().substr(2+$("button").text().indexOf("-")));
+			if(s >= c)
+			{
+				$("h1").text("Score: " + (s-c));
+				$("button").text("Buy autoclicker! - " + c*2);
+				auto++;
+			}
 		});
 	});
 </script>
@@ -64,5 +81,6 @@ body
 <img id="jesse" src="jess.jpg"/>
 <img id="skeleton" src="uh3.png"/>
 <h1 style="text-align: center;">Score: 0</h1>
+<button type="button">Buy autoclicker! - 10</button>
 </body>
 </html>
