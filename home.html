@@ -14,6 +14,7 @@
 body
 {
 	transition: background-color 1s;
+	user-select: none;
 }
 #skeleton
 {
@@ -51,9 +52,28 @@ body
 	{
 		var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
 		$("h1").text("Score: " + (s+auto));
+		localStorage.setItem("score", s+auto);
 	}
 	var auto = 0;
+	var sup = 0;
 	$(document).ready(function(){
+		console.log(localStorage.getItem("score"));
+		if(localStorage.getItem("score")!="NaN")
+		{
+			$("h1").text("Score: " + (localStorage.getItem("score")));
+			auto = parseInt(localStorage.getItem("auto"));
+			sup = parseInt(localStorage.getItem("super"));
+			$("#autoButton").text("Buy autoclicker! - " + (localStorage.getItem("autoPrice")));
+			$("#superButton").text("Buy superclicker! - " + (localStorage.getItem("superPrice")));
+		}
+		else
+		{
+			localStorage.setItem("score",0);
+			localStorage.setItem("auto",0);
+			localStorage.setItem("super",0);
+			localStorage.setItem("autoPrice",10);
+			localStorage.setItem("superPrice",10);
+		}
 		changeColor();
 		rotateJess();
 		var t = setInterval(changeColor, 1000);
@@ -61,16 +81,40 @@ body
 		var t3 = setInterval(autoClick, 1000);
 		$("img").click(function(){
 			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
-			$("h1").text("Score: " + (s+1));
+			$("h1").text("Score: " + (s+1+sup));
+			localStorage.setItem("score", s+1+sup);
 		});
-		$("button").click(function(){
+		$("#jesse").mousedown(function(){
+			console.log("!");
+			$("#jesse").attr("src","jess2.jpg");
+		});
+		$("#jesse").mouseup(function(){
+			$("#jesse").attr("src","jess.jpg");
+		});
+		$("#autoButton").click(function(){
 			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
-			var c = parseInt($("button").text().substr(2+$("button").text().indexOf("-")));
+			var c = parseInt($("#autoButton").text().substr(2+$("#autoButton").text().indexOf("-")));
 			if(s >= c)
 			{
 				$("h1").text("Score: " + (s-c));
-				$("button").text("Buy autoclicker! - " + c*2);
+				$("#autoButton").text("Buy autoclicker! - " + parseInt(c*1.5));
 				auto++;
+				localStorage.setItem("auto", auto);
+				localStorage.setItem("score", s-c);
+				localStorage.setItem("autoPrice", parseInt(c*1.5));
+			}
+		});
+		$("#superButton").click(function(){
+			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
+			var c = parseInt($("#superButton").text().substr(2+$("#superButton").text().indexOf("-")));
+			if(s >= c)
+			{
+				$("h1").text("Score: " + (s-c));
+				$("#superButton").text("Buy superclicker! - " + parseInt(c*1.5));
+				sup++;
+				localStorage.setItem("super", sup);
+				localStorage.setItem("score", s-c);
+				localStorage.setItem("superPrice", parseInt(c*1.5));
 			}
 		});
 	});
@@ -81,6 +125,7 @@ body
 <img id="jesse" src="jess.jpg"/>
 <img id="skeleton" src="uh3.png"/>
 <h1 style="text-align: center;">Score: 0</h1>
-<button type="button">Buy autoclicker! - 10</button>
+<button id="autoButton" type="button">Buy autoclicker! - 10</button>
+<button id="superButton" type="button">Buy superclicker! - 10</button>
 </body>
 </html>
