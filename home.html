@@ -58,15 +58,7 @@ body
 	var sup = 0;
 	$(document).ready(function(){
 		console.log(localStorage.getItem("score"));
-		if(localStorage.getItem("score")!="NaN")
-		{
-			$("h1").text("Score: " + (localStorage.getItem("score")));
-			auto = parseInt(localStorage.getItem("auto"));
-			sup = parseInt(localStorage.getItem("super"));
-			$("#autoButton").text("Buy autoclicker! - " + (localStorage.getItem("autoPrice")));
-			$("#superButton").text("Buy superclicker! - " + (localStorage.getItem("superPrice")));
-		}
-		else
+		if(localStorage.getItem("score")=="NaN")
 		{
 			localStorage.setItem("score",0);
 			localStorage.setItem("auto",0);
@@ -74,6 +66,11 @@ body
 			localStorage.setItem("autoPrice",10);
 			localStorage.setItem("superPrice",10);
 		}
+		$("h1").text("Score: " + (localStorage.getItem("score")));
+		auto = parseInt(localStorage.getItem("auto"));
+		sup = parseInt(localStorage.getItem("super"));
+		$("#autoButton").text("Buy autoclicker! - " + (localStorage.getItem("autoPrice")));
+		$("#superButton").text("Buy superclicker! - " + (localStorage.getItem("superPrice")));
 		changeColor();
 		rotateJess();
 		var t = setInterval(changeColor, 1000);
@@ -84,12 +81,14 @@ body
 			$("h1").text("Score: " + (s+1+sup));
 			localStorage.setItem("score", s+1+sup);
 		});
-		$("#jesse").mousedown(function(){
+		$("img").mousedown(function(){
 			console.log("!");
 			$("#jesse").attr("src","jess2.jpg");
+			$("#skeleton").attr("src","uh4.png");
 		});
-		$("#jesse").mouseup(function(){
+		$("img").mouseup(function(){
 			$("#jesse").attr("src","jess.jpg");
+			$("#skeleton").attr("src","uh3.png");
 		});
 		$("#autoButton").click(function(){
 			var s = parseInt($("h1").text().substr(2+$("h1").text().indexOf(":")));
